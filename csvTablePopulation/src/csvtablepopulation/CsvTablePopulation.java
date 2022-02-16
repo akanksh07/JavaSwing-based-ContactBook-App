@@ -11,7 +11,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.sql.Types;
+import java.sql.Types; 
 
 public class CsvTablePopulation {
     public static void main(String[] args) {
