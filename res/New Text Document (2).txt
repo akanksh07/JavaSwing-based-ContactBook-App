@@ -1,0 +1,22 @@
+
+package contactbook;
+
+import javax.swing.JFrame;
+
+/**
+ *
+ * @author akanksh_belchada 10/24
+ */
+public class ContactBook {
+
+  
+    public static void main(String[] args) {
+       FrameClass myFClass= new FrameClass();
+       myFClass.setSize(450,400);
+       myFClass.setVisible(true);
+       myFClass.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       
+       
+    }
+    
+}

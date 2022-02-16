@@ -1,0 +1,99 @@
+
+package contactbook;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JTextField;
+
+class FrameClass extends JFrame{
+    //declare  components
+    //declare labels
+    private JLabel selectContlabel,numberOfContLabel,
+            firstNameLabel, middleNameLabel, lastNameLabel,phoneNumberLabel,
+            addressLabel, workAddressLabel, homePhoneLabel, cellPhoneLabel,
+            birthDateLabel;
+    //declare text fields
+    private JTextField  firstNameTextF, middleNameTextF, lastNameTextF,
+            addressTextF, workAddressTextF, homePhoneTextF, cellPhoneTextF,
+            birthDateTextF;
+    //declare list and search button
+    private JList namesContactList=new JList();
+    private JButton searchbutton=new JButton("Search");
+    
+    //constructor
+    public FrameClass()
+    {
+      //setting the layout of the frame
+      this.setLayout(null);
+      //seetting a frame title
+      this.setTitle("Contact Book");
+      
+        
+      //intialize labels
+      selectContlabel = new JLabel("Select Contact:");
+      numberOfContLabel = new JLabel("Total Contacts:");
+      firstNameLabel = new JLabel("First Name:");
+      middleNameLabel = new JLabel("Middle Name:");
+      lastNameLabel = new JLabel("Last Name:");
+      addressLabel = new JLabel("Home Address:");
+      workAddressLabel = new JLabel("Work Address:");
+      homePhoneLabel = new JLabel("Phone:");
+      cellPhoneLabel = new JLabel("Work:");
+      birthDateLabel = new JLabel("Birth Date:");
+      //positioning the JLabels
+      selectContlabel.setBounds(15,5,100,30);
+//      numberOfContLabel.setBounds(5,5,100,30);
+//      firstNameLabel;
+//      middleNameLabel;
+//      lastNameLabel;
+//      addressLabel;
+//      workAddressLabel;
+//      homePhoneLabel;
+//      cellPhoneLabel;
+//      birthDateLabel;
+
+    //positioning and sizing the JList and Button
+    namesContactList.setBounds(15,40,200,200);
+    searchbutton.setBounds(15,290,200,30);
+    
+      //adding components to JFrame
+      this.add(selectContlabel);
+      this.add(numberOfContLabel);
+      this.add(firstNameLabel);
+      this.add(middleNameLabel);
+      this.add(lastNameLabel);
+      this.add(addressLabel);
+      this.add(workAddressLabel);
+      this.add(homePhoneLabel);
+      this.add(cellPhoneLabel);
+      this.add(birthDateLabel);
+      
+    //initialize text fields
+      firstNameTextF = new JTextField();
+      middleNameTextF = new JTextField(); 
+      lastNameTextF = new JTextField();
+      addressTextF = new JTextField();
+      workAddressTextF = new JTextField();
+      homePhoneTextF  = new JTextField();
+      cellPhoneTextF  = new JTextField();
+      birthDateTextF = new JTextField();
+    //positioning the JList
+    
+    //adding components to JFrame
+      this.add(firstNameTextF);
+      this.add(middleNameTextF); 
+      this.add(lastNameTextF);
+      this.add(addressTextF);
+      this.add(workAddressTextF);
+      this.add(homePhoneTextF);
+      this.add(cellPhoneTextF);
+      this.add(birthDateTextF);
+    
+    //adding the list and button on JFrame
+    this.add(namesContactList);
+    this.add(searchbutton);
+    }
+}
+

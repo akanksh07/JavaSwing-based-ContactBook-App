@@ -1,0 +1,97 @@
+
+---Create contact table
+ create table  if not exists pb_contact (cont_id INT NOT NULL AUTO_INCREMENT,
+              fname VARCHAR(20) NOT NULL,
+              lname VARCHAR(20) NOT NULL,
+              mname VARCHAR(20),
+              CONSTRAINT user_info UNIQUE(lname,fname,mname),
+              PRIMARY KEY (cont_id) );
+              
+---Create address table
+ create table  if not exists pb_address (add_id INT NOT NULL AUTO_INCREMENT,
+              cont_id INT NOT NULL,
+              address_type VARCHAR(10),
+              st_address VARCHAR(30),
+              city VARCHAR(10),
+              state VARCHAR(10),
+              zipcode VARCHAR(10),
+              PRIMARY KEY (add_id),
+              FOREIGN KEY (cont_id) REFERENCES pb_contact(cont_id));
+
+---Create phone table
+create table  if not exists pb_phone (phone_id INT NOT NULL AUTO_INCREMENT,
+              cont_id INT NOT NULL,
+              phone_type VARCHAR(10),
+              area_code VARCHAR(3),
+              number VARCHAR(7),
+              PRIMARY KEY (phone_id),
+              FOREIGN KEY (cont_id) REFERENCES pb_contact(cont_id));
+
+---Create date table
+create table  if not exists pb_date (date_id INT NOT NULL  AUTO_INCREMENT,
+              cont_id INT NOT NULL,
+              date_type VARCHAR(10),
+              date date,
+              PRIMARY KEY (date_id),
+              FOREIGN KEY (cont_id) REFERENCES pb_contact(cont_id));
+
+
+---Insert values into contact table
+INSERT INTO pb_contact VALUES (fname, lname, mname);
+
+---INSERT INTO pb_address (cont_id,address_type,st_address,city,state,zipcode) VALUES (?,?,?,?,?,?);
+
+
+DROP PROCEDURE `MODIFY_CONTACT`;
+CREATE DEFINER=`uh3hfr8kr8chwzhn`@`%` PROCEDURE `MODIFY_CONTACT`
+(IN `pb_cont_id` INT,
+ IN `gui_fname` VARCHAR(20) CHARSET utf8,
+ IN `gui_lname` VARCHAR(20) CHARSET utf8,
+ IN `gui_mname` VARCHAR(20) CHARSET utf8,
+ IN `gui_address_type` VARCHAR(10) CHARSET utf8,
+ IN `gui_st_address` VARCHAR(30) CHARSET utf8, 
+ IN `gui_city` VARCHAR(12) CHARSET utf8,
+ IN `gui_state` VARCHAR(10) CHARSET utf8, 
+ IN `gui_zipcode` VARCHAR(10) CHARSET utf8, 
+ IN `gui_phone_type` VARCHAR(10) CHARSET utf8, 
+ IN `gui_areaCode` VARCHAR(3) CHARSET utf8,
+ IN `gui_number` VARCHAR(7) CHARSET utf8,
+ IN `gui_date_type` VARCHAR(10) CHARSET utf8,
+ IN `gui_date` DATE) NOT DETERMINISTIC NO SQL SQL SECURITY DEFINER 
+ BEGIN
+        DECLARE rowsFound INT DEFAULT 0;
+        UPDATE pb_contact
+        SET pb_contact.fname=gui_fname,pb_contact.lname=gui_lname,pb_contact.mname=gui_mname 
+        WHERE pb_contact.cont_id=pb_cont_id;
+
+        UPDATE pb_address 
+        SET pb_address.st_address=gui_st_address,pb_address.city=gui_city,pb_address.state=gui_state,pb_address.zipcode=gui_zipcode
+        WHERE pb_address.cont_id = pb_cont_id AND pb_address.address_type=gui_address_type;
+        SELECT ROW_COUNT() INTO rowsFound;
+        IF rowsFound<1
+        THEN
+           INSERT INTO pb_address (cont_id,address_type,st_address,city,state,zipcode)
+           VALUES (pb_cont_id,gui_address_type,gui_st_address,gui_city,gui_state,gui_zipcode);
+        END IF;
+
+        UPDATE pb_phone 
+        SET pb_phone.area_code=gui_areaCode,pb_phone.number=gui_number
+        WHERE pb_phone.cont_id = pb_cont_id AND pb_phone.phone_type=gui_phone_type;
+        SELECT ROW_COUNT() INTO rowsFound;
+        IF rowsFound<1
+        THEN
+           INSERT INTO pb_phone (cont_id,phone_type,area_code,number)
+           VALUES(pb_cont_id,gui_phone_type,gui_areaCode,gui_number);
+        END IF;
+
+        UPDATE pb_date 
+        SET pb_date.date=gui_date
+        WHERE pb_date.cont_id = pb_cont_id AND pb_date.date_type=gui_date_type;
+        SELECT ROW_COUNT() INTO rowsFound;
+        IF rowsFound<1
+        THEN
+           INSERT INTO pb_date (cont_id,date_type,date)
+           VALUES (pb_cont_id,gui_date_type,gui_date);
+        END IF;
+
+ END
